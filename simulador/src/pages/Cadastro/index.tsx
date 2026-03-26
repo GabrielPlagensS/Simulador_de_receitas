@@ -29,7 +29,7 @@ function cadas() {
       const response = await fetch("http://localhost:3000/register", {
         method: "POST",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ name, email, password, cep }),
+        body: JSON.stringify({ name, email, password, cep, profissao }),
       });
 
       switch (response.status) {
@@ -43,7 +43,9 @@ function cadas() {
           setName("");
           setEmail("");
           setPassword("");
+          setConfirmPassword("");
           setCep("");
+          setProfissao("");
           setError("");
           break;
         case 500:
@@ -65,7 +67,7 @@ function cadas() {
   }
 
   return (
-    <div
+    <form
       className="bg-[#f5f9ff] min-h-screen flex items-center justify-center"
       onSubmit={handleSubmit}
     >
@@ -96,7 +98,6 @@ function cadas() {
           />
           <label className="block mb-1">Confirmar senha:</label>
           <Input
-            placeholder="Confirme sua senha"
             type="password"
             onChange={(e) => setConfirmPassword(e.target.value)}
             value={confirmPassword}
@@ -119,16 +120,14 @@ function cadas() {
         </div>
 
         <div className="flex flex-col gap-4 py-2.5">
-          <Link to="/login">
-            <Button title="Cadastrar" variant="default" />
-          </Link>
+          <Button title="Cadastrar" variant="default" type="submit" />
 
           <Link to="/login">
             <Button title="Login" variant="default" />
           </Link>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
 

@@ -1,11 +1,12 @@
 import Button from "../../Components/button";
 import Input from "../../Components/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 function login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -32,6 +33,8 @@ function login() {
         setError("");
         const data = await response.json();
         console.log(data);
+
+        navigate("/"); // 👈 REDIRECIONA
       }
     } catch (error) {
       console.log(error);
@@ -40,7 +43,7 @@ function login() {
   }
 
   return (
-    <div
+    <form
       className="bg-[#f5f9ff] min-h-screen flex items-center justify-center"
       onSubmit={handleSubmit}
     >
@@ -60,16 +63,14 @@ function login() {
         </div>
 
         <div className="flex flex-col gap-4 py-2.5">
-          <Link to="/">
-            <Button title="Login" variant="default" />
-          </Link>
+          <Button title="Login" variant="default" type="submit" />
 
           <Link to="/cadastro">
             <Button title="Cadastrar" variant="default" />
           </Link>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
 

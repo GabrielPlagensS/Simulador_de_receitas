@@ -4,40 +4,59 @@ import cors from "cors";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  }),
+);
 app.use(express.urlencoded({ extended: true }));
 
 connection();
 
 app.post("/login", async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body || {};
+    const { email, password } = req.body;
 
     if (!email || !password) {
-      res.status(400).json({ message: "E-mail e senha são obrigatórios." });
-      return;
+      return res.status(400).json({
+        message: "E-mail e senha são obrigatórios.",
+      });
     }
 
-    const user = await prisma.user.findFirst({
-      where: { email, password },
+    const user = await prisma.user.findUnique({
+      where: { email },
     });
 
     if (!user) {
-      res.status(404).json({ message: "Usuário não encontrado." });
+      return res.status(404).json({
+        message: "Usuário não encontrado.",
+      });
     }
 
-    res.status(200).json(user);
+    if (user.password !== password) {
+      return res.status(401).json({
+        message: "Senha inválida.",
+      });
+    }
+
+    // ✅ retorna só o necessário
+    return res.status(200).json({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Erro no servidor." });
-    return;
+    return res.status(500).json({
+      message: "Erro no servidor.",
+    });
   }
 });
 
 app.post("/register", async (req: Request, res: Response) => {
   try {
-    const { name, email, password, cep } = req.body;
+    const { name, email, password, cep, profissao } = req.body;
 
-    if (!name || !email || !password || !cep) {
+    if (!name || !email || !password || !cep || !profissao) {
       res
         .status(400)
         .json({ message: "Todas as informações são obrigatórias" });
@@ -54,13 +73,38 @@ app.post("/register", async (req: Request, res: Response) => {
     }
 
     const newUser = await prisma.user.create({
-      data: { name: name, email: email, password: password, cep: cep },
+      data: {
+        name: name,
+        email: email,
+        password: password,
+        cep: cep,
+        profissao: profissao,
+      },
     });
 
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ message: "Erro no servidor" });
     return;
+  }
+});
+
+app.post("/course", async (req: Request, res: Response) => {
+  try {
+    const { title, description, price, userId } = req.body;
+
+    const course = await prisma.course.create({
+      data: {
+        title,
+        description,
+        price,
+        userId,
+      },
+    });
+
+    return res.status(201).json(course);
+  } catch (error) {
+    return res.status(500).json({ error: "Erro ao criar curso" });
   }
 });
 
