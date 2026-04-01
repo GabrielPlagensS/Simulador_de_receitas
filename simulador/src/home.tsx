@@ -3,12 +3,15 @@ import { useState, useEffect } from "react";
 import Profe from "./assets/user.png";
 import Mais from "./assets/plus.png";
 import CreateCourseModal from "./Components/adicionar";
+import SimuladorModal from "./Components/simulador";
 
 function Home() {
   const [open, setOpen] = useState(false);
   const [courses, setCourses] = useState<any[]>([]);
   const user = JSON.parse(localStorage.getItem("user") || "null");
   const navigate = useNavigate();
+  const [selectedCourse, setSelectedCourse] = useState<any>(null);
+  const [openSimulate, setOpenSimulate] = useState(false);
 
   function handleOpen() {
     if (!user) {
@@ -81,32 +84,46 @@ function Home() {
         onSuccess={fetchCourses}
       />
 
-      {/* TÍTULO */}
       <div className="text-center">
         <p className="text-5xl p-6">Seus cursos</p>
       </div>
 
-      {/* LISTA DE CURSOS */}
       <div className="grid grid-cols-3 gap-6 px-10">
         {courses.map((course) => (
-          <div key={course.id} className="bg-white p-4 rounded shadow-md">
-            {/* IMAGEM */}
-            <div className="w-full h-40 bg-gray-200 mb-2 overflow-hidden flex items-center justify-center">
+          <div
+            key={course.id}
+            className="relative bg-white p-4 rounded shadow-md"
+          >
+            <button
+              onClick={() => {
+                setSelectedCourse(course);
+                setOpenSimulate(true);
+              }}
+              className="absolute top-2 right-2 px-2 py-1 rounded hover:bg-gray-200 text-lg"
+            >
+              ⋮
+            </button>
+
+            <div className="w-full h-40 flex items-center justify-center">
               {course.image ? (
                 <img
                   src={course.image}
-                  className="w-full h-full object-cover"
+                  className="max-w-[120px] max-h-[120px] object-contain"
                 />
               ) : (
                 "Sem imagem"
               )}
             </div>
 
-            {/* NOME */}
-            <h2 className="font-bold text-lg">{course.title}</h2>
+            <h2 className="font-bold text-lg mt-2">{course.title}</h2>
           </div>
         ))}
       </div>
+      <SimuladorModal
+        isOpen={openSimulate}
+        onClose={() => setOpenSimulate(false)}
+        course={selectedCourse}
+      />
     </div>
   );
 }
