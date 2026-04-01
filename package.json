@@ -3,5 +3,8 @@
     "@flaticon/flaticon-uicons": "^3.3.1",
     "@tailwindcss/vite": "^4.2.1",
     "tailwindcss": "^4.2.1"
+  },
+  "devDependencies": {
+    "@types/multer": "^2.1.0"
   }
 }

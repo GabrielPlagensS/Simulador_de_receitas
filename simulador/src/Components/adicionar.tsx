@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Button from "./button";
 import Input from "./input";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess: () => void; // 🔥 importante
 };
 
-export default function CreateCourseModal({ isOpen, onClose }: Props) {
+export default function CreateCourseModal({
+  isOpen,
+  onClose,
+  onSuccess,
+}: Props) {
   const [form, setForm] = useState({
     title: "",
     hours: "",
@@ -16,111 +21,147 @@ export default function CreateCourseModal({ isOpen, onClose }: Props) {
     date: "",
     profissao: "",
     description: "",
-    learning: "",
     price: "",
     language: "",
-    modules: "",
-    certificate: "",
   });
 
+  const [preview, setPreview] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
   if (!isOpen) return null;
+
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+
+  if (!user) {
+    return (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+        <div className="bg-white p-6 rounded">
+          <p>Você precisa estar logado.</p>
+          <button onClick={onClose}>Fechar</button>
+        </div>
+      </div>
+    );
+  }
 
   function handleChange(e: any) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  async function handleSubmit() {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
+  function handleClickImage() {
+    inputRef.current?.click();
+  }
 
-    await fetch("http://localhost:3000/course", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...form,
-        price: Number(form.price),
-        userId: user.id,
-      }),
+  function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const selected = e.target.files?.[0];
+    if (selected) {
+      setFile(selected);
+      setPreview(URL.createObjectURL(selected));
+    }
+  }
+
+  async function handleSubmit() {
+    if (!file) {
+      alert("Selecione uma imagem");
+      return;
+    }
+
+    const formData = new FormData();
+
+    Object.entries(form).forEach(([key, value]) => {
+      formData.append(key, value);
     });
 
+    formData.append("userId", user.id);
+    formData.append("image", file);
+
+    const response = await fetch("http://localhost:3000/course", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      alert("Erro ao criar curso");
+      return;
+    }
+
+    alert("Curso criado com sucesso");
+
+    onSuccess();
     onClose();
   }
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-      <div className="bg-gray-300 w-225 p-6 rounded-md">
-        <div className="flex gap-2 mb-4">
+      <div className="bg-gray-300 w-[900px] p-6 rounded-md">
+        {/* IMAGEM */}
+        <div className="flex gap-4 mb-4 items-end">
           <div className="w-50 h-50 bg-white flex items-center justify-center border">
-            Imagem do curso
+            {preview ? (
+              <img src={preview} className="w-full h-full object-cover" />
+            ) : (
+              "Imagem do curso"
+            )}
           </div>
-          <Button title="Enviar imagem" variant="default" />
+
+          <input
+            type="file"
+            ref={inputRef}
+            onChange={handleFile}
+            className="hidden"
+          />
+
+          <Button
+            title="Enviar imagem"
+            onClick={handleClickImage}
+            variant="default"
+          />
         </div>
 
         <div className="space-y-3">
-          <div>
-            <label>Título do curso:</label>
-            <Input name="title" onChange={handleChange} />
-          </div>
-
           <div className="flex gap-2">
-            <div className="flex-1">
-              <label>Total de horas:</label>
-              <Input name="hours" onChange={handleChange} />
-            </div>
-
-            <div className="flex-1">
-              <label>Total de Aulas:</label>
-              <Input name="lessons" onChange={handleChange} />
-            </div>
-          </div>
-
-          <div className="flex gap-2">
-            <div className="flex-1">
-              <label>Nível do curso:</label>
-              <Input name="level" onChange={handleChange} />
-            </div>
-
-            <div className="flex-1">
-              <label>Data de criação:</label>
-              <Input name="date" onChange={handleChange} />
-            </div>
-          </div>
-
-          <div>
-            <label>Profissão abordada:</label>
-            <Input name="profissao" onChange={handleChange} />
-          </div>
-
-          <div>
-            <label>Descrição do curso:</label>
-            <textarea
-              name="description"
+            <Input name="title" placeholder="Título" onChange={handleChange} />
+            <Input
+              name="profissao"
+              placeholder="Profissão"
               onChange={handleChange}
-              className="w-full border h-20 bg-white"
             />
           </div>
 
           <div className="flex gap-2">
-            <div className="flex-1">
-              <label>Preço do curso:</label>
-              <Input name="price" onChange={handleChange} />
-            </div>
-
-            <div className="flex-1">
-              <label>Idioma do curso:</label>
-              <Input name="language" onChange={handleChange} />
-            </div>
+            <Input name="hours" placeholder="Horas" onChange={handleChange} />
+            <Input name="lessons" placeholder="Aulas" onChange={handleChange} />
           </div>
+
+          <div className="flex gap-2">
+            <Input name="level" placeholder="Nível" onChange={handleChange} />
+            <Input name="date" placeholder="Data" onChange={handleChange} />
+          </div>
+
+          <div className="flex gap-2">
+            <Input name="price" placeholder="Preço" onChange={handleChange} />
+            <Input
+              name="language"
+              placeholder="Idioma"
+              onChange={handleChange}
+            />
+          </div>
+
+          <textarea
+            name="description"
+            placeholder="Descrição"
+            onChange={handleChange}
+            className="w-full border h-20 bg-white"
+          />
         </div>
 
         {/* BOTÕES */}
         <div className="flex justify-end gap-4 mt-6">
-          <Button title="Voltar" variant="default" onClick={onClose} />
+          <Button title="Voltar" onClick={onClose} variant="default" />
           <Button
-            title=" Salvar Curso"
-            variant="default"
+            title="Salvar Curso"
             onClick={handleSubmit}
+            variant="default"
           />
         </div>
       </div>

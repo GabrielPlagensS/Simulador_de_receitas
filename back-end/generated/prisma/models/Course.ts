@@ -27,68 +27,118 @@ export type AggregateCourse = {
 }
 
 export type CourseAvgAggregateOutputType = {
+  hours: number | null
+  lessons: number | null
   price: number | null
 }
 
 export type CourseSumAggregateOutputType = {
+  hours: number | null
+  lessons: number | null
   price: number | null
 }
 
 export type CourseMinAggregateOutputType = {
   id: string | null
   title: string | null
+  hours: number | null
+  lessons: number | null
+  level: string | null
+  createdAt: Date | null
+  profissao: string | null
+  image: string | null
   description: string | null
   price: number | null
+  language: string | null
   userId: string | null
 }
 
 export type CourseMaxAggregateOutputType = {
   id: string | null
   title: string | null
+  hours: number | null
+  lessons: number | null
+  level: string | null
+  createdAt: Date | null
+  profissao: string | null
+  image: string | null
   description: string | null
   price: number | null
+  language: string | null
   userId: string | null
 }
 
 export type CourseCountAggregateOutputType = {
   id: number
   title: number
+  hours: number
+  lessons: number
+  level: number
+  createdAt: number
+  profissao: number
+  image: number
   description: number
   price: number
+  language: number
   userId: number
   _all: number
 }
 
 
 export type CourseAvgAggregateInputType = {
+  hours?: true
+  lessons?: true
   price?: true
 }
 
 export type CourseSumAggregateInputType = {
+  hours?: true
+  lessons?: true
   price?: true
 }
 
 export type CourseMinAggregateInputType = {
   id?: true
   title?: true
+  hours?: true
+  lessons?: true
+  level?: true
+  createdAt?: true
+  profissao?: true
+  image?: true
   description?: true
   price?: true
+  language?: true
   userId?: true
 }
 
 export type CourseMaxAggregateInputType = {
   id?: true
   title?: true
+  hours?: true
+  lessons?: true
+  level?: true
+  createdAt?: true
+  profissao?: true
+  image?: true
   description?: true
   price?: true
+  language?: true
   userId?: true
 }
 
 export type CourseCountAggregateInputType = {
   id?: true
   title?: true
+  hours?: true
+  lessons?: true
+  level?: true
+  createdAt?: true
+  profissao?: true
+  image?: true
   description?: true
   price?: true
+  language?: true
   userId?: true
   _all?: true
 }
@@ -182,8 +232,15 @@ export type CourseGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type CourseGroupByOutputType = {
   id: string
   title: string
+  hours: number
+  lessons: number
+  level: string
+  createdAt: Date
+  profissao: string
+  image: string
   description: string
   price: number
+  language: string
   userId: string
   _count: CourseCountAggregateOutputType | null
   _avg: CourseAvgAggregateOutputType | null
@@ -213,8 +270,15 @@ export type CourseWhereInput = {
   NOT?: Prisma.CourseWhereInput | Prisma.CourseWhereInput[]
   id?: Prisma.StringFilter<"Course"> | string
   title?: Prisma.StringFilter<"Course"> | string
+  hours?: Prisma.IntFilter<"Course"> | number
+  lessons?: Prisma.IntFilter<"Course"> | number
+  level?: Prisma.StringFilter<"Course"> | string
+  createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string
+  profissao?: Prisma.StringFilter<"Course"> | string
+  image?: Prisma.StringFilter<"Course"> | string
   description?: Prisma.StringFilter<"Course"> | string
   price?: Prisma.FloatFilter<"Course"> | number
+  language?: Prisma.StringFilter<"Course"> | string
   userId?: Prisma.StringFilter<"Course"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -222,8 +286,15 @@ export type CourseWhereInput = {
 export type CourseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  hours?: Prisma.SortOrder
+  lessons?: Prisma.SortOrder
+  level?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  profissao?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  language?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
@@ -234,8 +305,15 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CourseWhereInput[]
   NOT?: Prisma.CourseWhereInput | Prisma.CourseWhereInput[]
   title?: Prisma.StringFilter<"Course"> | string
+  hours?: Prisma.IntFilter<"Course"> | number
+  lessons?: Prisma.IntFilter<"Course"> | number
+  level?: Prisma.StringFilter<"Course"> | string
+  createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string
+  profissao?: Prisma.StringFilter<"Course"> | string
+  image?: Prisma.StringFilter<"Course"> | string
   description?: Prisma.StringFilter<"Course"> | string
   price?: Prisma.FloatFilter<"Course"> | number
+  language?: Prisma.StringFilter<"Course"> | string
   userId?: Prisma.StringFilter<"Course"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
@@ -243,8 +321,15 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
 export type CourseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  hours?: Prisma.SortOrder
+  lessons?: Prisma.SortOrder
+  level?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  profissao?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  language?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   _count?: Prisma.CourseCountOrderByAggregateInput
   _avg?: Prisma.CourseAvgOrderByAggregateInput
@@ -259,63 +344,119 @@ export type CourseScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CourseScalarWhereWithAggregatesInput | Prisma.CourseScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Course"> | string
   title?: Prisma.StringWithAggregatesFilter<"Course"> | string
+  hours?: Prisma.IntWithAggregatesFilter<"Course"> | number
+  lessons?: Prisma.IntWithAggregatesFilter<"Course"> | number
+  level?: Prisma.StringWithAggregatesFilter<"Course"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Course"> | Date | string
+  profissao?: Prisma.StringWithAggregatesFilter<"Course"> | string
+  image?: Prisma.StringWithAggregatesFilter<"Course"> | string
   description?: Prisma.StringWithAggregatesFilter<"Course"> | string
   price?: Prisma.FloatWithAggregatesFilter<"Course"> | number
+  language?: Prisma.StringWithAggregatesFilter<"Course"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Course"> | string
 }
 
 export type CourseCreateInput = {
   id?: string
   title: string
+  hours: number
+  lessons: number
+  level: string
+  createdAt?: Date | string
+  profissao: string
+  image: string
   description: string
   price: number
+  language: string
   user: Prisma.UserCreateNestedOneWithoutCoursesInput
 }
 
 export type CourseUncheckedCreateInput = {
   id?: string
   title: string
+  hours: number
+  lessons: number
+  level: string
+  createdAt?: Date | string
+  profissao: string
+  image: string
   description: string
   price: number
+  language: string
   userId: string
 }
 
 export type CourseUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  hours?: Prisma.IntFieldUpdateOperationsInput | number
+  lessons?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profissao?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  language?: Prisma.StringFieldUpdateOperationsInput | string
   user?: Prisma.UserUpdateOneRequiredWithoutCoursesNestedInput
 }
 
 export type CourseUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  hours?: Prisma.IntFieldUpdateOperationsInput | number
+  lessons?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profissao?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  language?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CourseCreateManyInput = {
   id?: string
   title: string
+  hours: number
+  lessons: number
+  level: string
+  createdAt?: Date | string
+  profissao: string
+  image: string
   description: string
   price: number
+  language: string
   userId: string
 }
 
 export type CourseUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  hours?: Prisma.IntFieldUpdateOperationsInput | number
+  lessons?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profissao?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  language?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CourseUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  hours?: Prisma.IntFieldUpdateOperationsInput | number
+  lessons?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profissao?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  language?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -332,32 +473,57 @@ export type CourseOrderByRelationAggregateInput = {
 export type CourseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  hours?: Prisma.SortOrder
+  lessons?: Prisma.SortOrder
+  level?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  profissao?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  language?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
 export type CourseAvgOrderByAggregateInput = {
+  hours?: Prisma.SortOrder
+  lessons?: Prisma.SortOrder
   price?: Prisma.SortOrder
 }
 
 export type CourseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  hours?: Prisma.SortOrder
+  lessons?: Prisma.SortOrder
+  level?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  profissao?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  language?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
 export type CourseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  hours?: Prisma.SortOrder
+  lessons?: Prisma.SortOrder
+  level?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  profissao?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  language?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
 export type CourseSumOrderByAggregateInput = {
+  hours?: Prisma.SortOrder
+  lessons?: Prisma.SortOrder
   price?: Prisma.SortOrder
 }
 
@@ -403,6 +569,18 @@ export type CourseUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.CourseScalarWhereInput | Prisma.CourseScalarWhereInput[]
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
 export type FloatFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -414,15 +592,29 @@ export type FloatFieldUpdateOperationsInput = {
 export type CourseCreateWithoutUserInput = {
   id?: string
   title: string
+  hours: number
+  lessons: number
+  level: string
+  createdAt?: Date | string
+  profissao: string
+  image: string
   description: string
   price: number
+  language: string
 }
 
 export type CourseUncheckedCreateWithoutUserInput = {
   id?: string
   title: string
+  hours: number
+  lessons: number
+  level: string
+  createdAt?: Date | string
+  profissao: string
+  image: string
   description: string
   price: number
+  language: string
 }
 
 export type CourseCreateOrConnectWithoutUserInput = {
@@ -457,37 +649,72 @@ export type CourseScalarWhereInput = {
   NOT?: Prisma.CourseScalarWhereInput | Prisma.CourseScalarWhereInput[]
   id?: Prisma.StringFilter<"Course"> | string
   title?: Prisma.StringFilter<"Course"> | string
+  hours?: Prisma.IntFilter<"Course"> | number
+  lessons?: Prisma.IntFilter<"Course"> | number
+  level?: Prisma.StringFilter<"Course"> | string
+  createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string
+  profissao?: Prisma.StringFilter<"Course"> | string
+  image?: Prisma.StringFilter<"Course"> | string
   description?: Prisma.StringFilter<"Course"> | string
   price?: Prisma.FloatFilter<"Course"> | number
+  language?: Prisma.StringFilter<"Course"> | string
   userId?: Prisma.StringFilter<"Course"> | string
 }
 
 export type CourseCreateManyUserInput = {
   id?: string
   title: string
+  hours: number
+  lessons: number
+  level: string
+  createdAt?: Date | string
+  profissao: string
+  image: string
   description: string
   price: number
+  language: string
 }
 
 export type CourseUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  hours?: Prisma.IntFieldUpdateOperationsInput | number
+  lessons?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profissao?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  language?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CourseUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  hours?: Prisma.IntFieldUpdateOperationsInput | number
+  lessons?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profissao?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  language?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CourseUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  hours?: Prisma.IntFieldUpdateOperationsInput | number
+  lessons?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profissao?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  language?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -495,8 +722,15 @@ export type CourseUncheckedUpdateManyWithoutUserInput = {
 export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  hours?: boolean
+  lessons?: boolean
+  level?: boolean
+  createdAt?: boolean
+  profissao?: boolean
+  image?: boolean
   description?: boolean
   price?: boolean
+  language?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["course"]>
@@ -504,8 +738,15 @@ export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type CourseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  hours?: boolean
+  lessons?: boolean
+  level?: boolean
+  createdAt?: boolean
+  profissao?: boolean
+  image?: boolean
   description?: boolean
   price?: boolean
+  language?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["course"]>
@@ -513,8 +754,15 @@ export type CourseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type CourseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  hours?: boolean
+  lessons?: boolean
+  level?: boolean
+  createdAt?: boolean
+  profissao?: boolean
+  image?: boolean
   description?: boolean
   price?: boolean
+  language?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["course"]>
@@ -522,12 +770,19 @@ export type CourseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type CourseSelectScalar = {
   id?: boolean
   title?: boolean
+  hours?: boolean
+  lessons?: boolean
+  level?: boolean
+  createdAt?: boolean
+  profissao?: boolean
+  image?: boolean
   description?: boolean
   price?: boolean
+  language?: boolean
   userId?: boolean
 }
 
-export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "price" | "userId", ExtArgs["result"]["course"]>
+export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "hours" | "lessons" | "level" | "createdAt" | "profissao" | "image" | "description" | "price" | "language" | "userId", ExtArgs["result"]["course"]>
 export type CourseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -546,8 +801,15 @@ export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     title: string
+    hours: number
+    lessons: number
+    level: string
+    createdAt: Date
+    profissao: string
+    image: string
     description: string
     price: number
+    language: string
     userId: string
   }, ExtArgs["result"]["course"]>
   composites: {}
@@ -975,8 +1237,15 @@ export interface Prisma__CourseClient<T, Null = never, ExtArgs extends runtime.T
 export interface CourseFieldRefs {
   readonly id: Prisma.FieldRef<"Course", 'String'>
   readonly title: Prisma.FieldRef<"Course", 'String'>
+  readonly hours: Prisma.FieldRef<"Course", 'Int'>
+  readonly lessons: Prisma.FieldRef<"Course", 'Int'>
+  readonly level: Prisma.FieldRef<"Course", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Course", 'DateTime'>
+  readonly profissao: Prisma.FieldRef<"Course", 'String'>
+  readonly image: Prisma.FieldRef<"Course", 'String'>
   readonly description: Prisma.FieldRef<"Course", 'String'>
   readonly price: Prisma.FieldRef<"Course", 'Float'>
+  readonly language: Prisma.FieldRef<"Course", 'String'>
   readonly userId: Prisma.FieldRef<"Course", 'String'>
 }
     

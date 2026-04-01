@@ -30,11 +30,12 @@ function login() {
         setError("Usuário e senha são obrigatorios");
       }
       if (response.status === 200) {
-        setError("");
         const data = await response.json();
-        console.log(data);
 
-        navigate("/"); // 👈 REDIRECIONA
+        localStorage.setItem("user", JSON.stringify(data));
+
+        setError("");
+        navigate("/");
       }
     } catch (error) {
       console.log(error);

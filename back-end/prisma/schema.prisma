@@ -23,8 +23,9 @@ model Course {
   hours       Int
   lessons     Int
   level       String
-  createdAt   String
+  createdAt   DateTime @default(now())
   profissao   String
+  image       String
   description String
   price       Float
   language    String 
