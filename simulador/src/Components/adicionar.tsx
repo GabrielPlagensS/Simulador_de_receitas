@@ -33,6 +33,11 @@ export default function CreateCourseModal({
 
   const user = JSON.parse(localStorage.getItem("user") || "null");
 
+  if (!user || !user.id) {
+    alert("Erro de autenticação");
+    return;
+  }
+
   if (!user) {
     return (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
@@ -94,7 +99,6 @@ export default function CreateCourseModal({
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
       <div className="bg-gray-300 w-[900px] p-6 rounded-md">
-        {/* IMAGEM */}
         <div className="flex gap-4 mb-4 items-end">
           <div className="w-50 h-50 bg-white flex items-center justify-center border">
             {preview ? (
@@ -155,7 +159,6 @@ export default function CreateCourseModal({
           />
         </div>
 
-        {/* BOTÕES */}
         <div className="flex justify-end gap-4 mt-6">
           <Button title="Voltar" onClick={onClose} variant="default" />
           <Button
