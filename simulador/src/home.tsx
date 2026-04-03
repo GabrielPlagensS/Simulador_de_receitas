@@ -53,7 +53,6 @@ function Home() {
 
   return (
     <div className="bg-[#f5f9ff] min-h-screen">
-      {/* HEADER */}
       <div className="bg-[#1163C8]">
         <div className="flex justify-end items-center w-full p-3 gap-2">
           <img

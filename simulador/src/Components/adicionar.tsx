@@ -97,7 +97,7 @@ export default function CreateCourseModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
       <div className="bg-gray-300 w-[900px] p-6 rounded-md">
         <div className="flex gap-4 mb-4 items-end">
           <div className="w-50 h-50 bg-white flex items-center justify-center border">
@@ -122,41 +122,63 @@ export default function CreateCourseModal({
           />
         </div>
 
-        <div className="space-y-3">
-          <div className="flex gap-2">
-            <Input name="title" placeholder="Título" onChange={handleChange} />
-            <Input
-              name="profissao"
-              placeholder="Profissão"
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col">
+              <label>Título:</label>
+              <Input name="title" onChange={handleChange} />
+            </div>
+
+            <div className="flex flex-col">
+              <label>Profissão:</label>
+              <Input name="profissao" onChange={handleChange} />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col">
+              <label>Horas:</label>
+              <Input name="hours" onChange={handleChange} />
+            </div>
+
+            <div className="flex flex-col">
+              <label>Aulas:</label>
+              <Input name="lessons" onChange={handleChange} />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col">
+              <label>Nível:</label>
+              <Input name="level" onChange={handleChange} />
+            </div>
+
+            <div className="flex flex-col">
+              <label>Data:</label>
+              <Input name="date" onChange={handleChange} />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col">
+              <label>Preço:</label>
+              <Input name="price" onChange={handleChange} />
+            </div>
+
+            <div className="flex flex-col">
+              <label>Idioma:</label>
+              <Input name="language" onChange={handleChange} />
+            </div>
+          </div>
+
+          <div className="flex flex-col">
+            <label>Descrição:</label>
+            <textarea
+              name="description"
               onChange={handleChange}
+              className="w-full border h-20 bg-white"
             />
           </div>
-
-          <div className="flex gap-2">
-            <Input name="hours" placeholder="Horas" onChange={handleChange} />
-            <Input name="lessons" placeholder="Aulas" onChange={handleChange} />
-          </div>
-
-          <div className="flex gap-2">
-            <Input name="level" placeholder="Nível" onChange={handleChange} />
-            <Input name="date" placeholder="Data" onChange={handleChange} />
-          </div>
-
-          <div className="flex gap-2">
-            <Input name="price" placeholder="Preço" onChange={handleChange} />
-            <Input
-              name="language"
-              placeholder="Idioma"
-              onChange={handleChange}
-            />
-          </div>
-
-          <textarea
-            name="description"
-            placeholder="Descrição"
-            onChange={handleChange}
-            className="w-full border h-20 bg-white"
-          />
         </div>
 
         <div className="flex justify-end gap-4 mt-6">

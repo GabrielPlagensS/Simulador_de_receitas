@@ -14,9 +14,11 @@ type Props = {
   course: Course | null;
 };
 
+// - No input the preco colocar uma máscara para exibir R$ 100,00
+
 export default function SimuladorModal({ isOpen, onClose, course }: Props) {
   const [students, setStudents] = useState(0);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState("");
   const [conversion, setConversion] = useState(0);
   const [churn, setChurn] = useState(0);
 
@@ -32,15 +34,28 @@ export default function SimuladorModal({ isOpen, onClose, course }: Props) {
 
   function simular() {
     const alunosEstimados = students * (conversion / 100);
-    const receitaMensal = alunosEstimados * price;
+    const numericPrice = Number(price.replace(/\D/g, "")) / 100;
+    const receitaMensal = alunosEstimados * numericPrice;
     const receitaAnual = receitaMensal * 12;
-    const ltv = churn > 0 ? receitaMensal / churn : 0;
+    const ltv =
+      churn > 0
+        ? (receitaAnual - receitaAnual * (churn / 100)) / alunosEstimados
+        : 0;
 
     setResultado({
       mensal: receitaMensal,
       anual: receitaAnual,
       ltv,
       alunos: alunosEstimados,
+    });
+  }
+  function formatCurrency(value: string) {
+    const numeric = value.replace(/\D/g, "");
+    const number = Number(numeric) / 100;
+
+    return number.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
     });
   }
 
@@ -95,32 +110,43 @@ export default function SimuladorModal({ isOpen, onClose, course }: Props) {
             <label>Título do curso: {courseData.title}</label>
           </div>
 
-          <div className="flex gap-4">
-            <Input
-              type="number"
-              placeholder="Total de alunos"
-              onChange={(e) => setStudents(Number(e.target.value))}
-            />
-
-            <Input
-              type="number"
-              placeholder="Preço do curso"
-              onChange={(e) => setPrice(Number(e.target.value))}
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col">
+              <label>Total de Leads:</label>
+              <Input
+                type="number"
+                onChange={(e) => setStudents(Number(e.target.value))}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label>Preço do curso:</label>
+              <Input
+                name="price"
+                type="number"
+                value={price}
+                onChange={(e) => {
+                  const raw = e.target.value.replace(/\D/g, "");
+                  setPrice(formatCurrency(raw));
+                }}
+              />
+            </div>
           </div>
 
-          <div className="flex gap-4">
-            <Input
-              type="number"
-              placeholder="Taxa de conversão (%)"
-              onChange={(e) => setConversion(Number(e.target.value))}
-            />
-
-            <Input
-              type="number"
-              placeholder="Churn"
-              onChange={(e) => setChurn(Number(e.target.value))}
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col">
+              <label>Taxa de conversão(%):</label>
+              <Input
+                type="number"
+                onChange={(e) => setConversion(Number(e.target.value))}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label>Churn:</label>
+              <Input
+                type="number"
+                onChange={(e) => setChurn(Number(e.target.value))}
+              />
+            </div>
           </div>
         </div>
 
