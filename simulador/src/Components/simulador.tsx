@@ -122,10 +122,11 @@ export default function SimuladorModal({ isOpen, onClose, course }: Props) {
               <label>Preço do curso:</label>
               <Input
                 name="price"
-                type="number"
+                type="text"
                 value={price}
                 onChange={(e) => {
                   const raw = e.target.value.replace(/\D/g, "");
+                  console.log();
                   setPrice(formatCurrency(raw));
                 }}
               />
