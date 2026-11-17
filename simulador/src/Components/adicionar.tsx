@@ -80,7 +80,7 @@ export default function CreateCourseModal({
     formData.append("userId", user.id);
     formData.append("image", file);
 
-    const response = await fetch("http://localhost:3000/course", {
+    const response = await fetch("/api/course", {
       method: "POST",
       body: formData,
     });

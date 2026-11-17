@@ -31,7 +31,7 @@ function Home() {
 
     if (!user) return;
 
-    fetch(`http://localhost:3000/courses?userId=${user.id}`)
+    fetch(`/api/courses?userId=${user.id}`)
       .then((res) => res.json())
       .then((data) => setCourses(data))
       .catch((err) => console.log(err));
@@ -42,7 +42,7 @@ function Home() {
 
     if (!user) return;
 
-    const res = await fetch(`http://localhost:3000/courses?userId=${user.id}`);
+    const res = await fetch(`/api/courses?userId=${user.id}`);
 
     const data = await res.json();
     setCourses(data);
