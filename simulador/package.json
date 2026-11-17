@@ -11,11 +11,15 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.1",
+    "@tailwindcss/vite": "^4.3.5",
     "@vercel/blob": "^2.9.0",
     "express": "^5.2.1",
+    "jspdf": "^4.2.1",
+    "pdfjs": "^2.5.4",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-router-dom": "^7.13.1"
+    "react-router-dom": "^7.13.1",
+    "tailwindcss": "^4.3.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
